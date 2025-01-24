@@ -11,37 +11,37 @@ const createGalleryCardTemplate = imageInfo => {
     />
   
    <div class="image-info">
-      <p><strong>Likes:</strong> ${likes}</p>
-      <p><strong>Views:</strong> ${views}</p>
-      <p><strong>Comments:</strong> ${comments}</p>
-      <p><strong>Downloads:</strong> ${downloads}</p>
+      <p class="image-additional-info"><strong>Likes:</strong> ${imageInfo.likes}</p>
+      <p class="image-additional-info"><strong>Views:</strong> ${imageInfo.views}</p>
+      <p class="image-additional-info"><strong>Comments:</strong> ${imageInfo.comments}</p>
+      <p class="image-additional-info"><strong>Downloads:</strong> ${imageInfo.downloads}</p>
     </div>
    </li>`;
 };
 
-// const onSearchFormSubmit = event => {
-//   event.preventDefault();
+const onSearchFormSubmit = event => {
+  event.preventDefault();
 
-//   const searchFormValue = event.currentTarget.elements.search.value;
-//   fetch(
-//     `https://pixabay.com/api/?key=48347976-46935637adedce2affc2ad0dc&q=${searchFormValue}&image_type=photo&orientation=horizontal$safesearch=true`
-//   )
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error(response.status);
-//       }
-//       return response.json();
-//     })
-//     .then(data => {
-//       const galleryTemplate = data;
-//       //   .map(el => createGalleryCardTemplate(el))
-//       //   .join('');
-//       // console.log(galleryTemplate);
-//       console.log(galleryTemplate);
-//     })
-//     .catch(err => console.log(err));
-// };
-// searchFormEl.addEventListener('submit', onSearchFormSubmit);
+  const searchFormValue = event.currentTarget.elements.search.value;
+  fetch(
+    `https://pixabay.com/api/?key=48347976-46935637adedce2affc2ad0dc&q=${searchFormValue}&image_type=photo&orientation=horizontal$safesearch=true`
+  )
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      const galleryTemplate = data.hits
+        .map(el => createGalleryCardTemplate(el))
+        .join('');
+
+      galleryList.innerHTML = galleryTemplate;
+    })
+    .catch(err => console.log(err));
+};
+searchFormEl.addEventListener('submit', onSearchFormSubmit);
 
 // <h2 class="likes-title js-likes-title">Likes</h2>
 // <p class="likes-info js-likes-info"></p>

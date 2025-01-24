@@ -71,3 +71,29 @@
 .search-btn:hover {
   background-color: rgba(108, 140, 255, 1);
 }
+
+.gallery-image {
+  width: 360px;
+  height: 200px;
+  object-fit: cover;
+}
+.gallery-card {
+  border: 1px solid rgba(128, 128, 128, 1);
+}
+.js-gallery {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.image-info {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 4px;
+  justify-content: space-around;
+}
+.image-additional-info {
+  display: flex;
+  flex-direction: column;
+}
