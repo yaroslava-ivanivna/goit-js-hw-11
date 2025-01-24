@@ -97,3 +97,15 @@
   display: flex;
   flex-direction: column;
 }
+
+.loader {
+  background: url(/src/img/Spin@1x-1.0s-200px-200px.gif) no-repeat center center;
+  background-size: 10%;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.loader:not(.visually-hidden) {
+  opacity: 1;
+}
