@@ -55,6 +55,8 @@ const onSearchFormSubmit = event => {
       galleryList.innerHTML = galleryTemplate;
 
       hideLoader();
+      searchFormEl.reset();
+      lightbox.refresh();
 
       new SimpleLightbox('.gallery a', {
         captionDelay: 250,
