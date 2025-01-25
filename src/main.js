@@ -15,8 +15,8 @@ function hideLoader() {
 const searchFormEl = document.querySelector('.js-search-form');
 const galleryList = document.querySelector('.js-gallery');
 
-import { createGalleryCardTemplate } from './render-function';
-import { fetchPhotosByUserQuery } from './pixabay-api';
+import { createGalleryCardTemplate } from './js/render-function';
+import { fetchPhotosByUserQuery } from './js/pixabay-api';
 
 const onSearchFormSubmit = event => {
   event.preventDefault();
