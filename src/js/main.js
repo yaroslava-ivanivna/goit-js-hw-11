@@ -15,24 +15,8 @@ function hideLoader() {
 const searchFormEl = document.querySelector('.js-search-form');
 const galleryList = document.querySelector('.js-gallery');
 
-const createGalleryCardTemplate = imageInfo => {
-  return `<li class="gallery-card">
-  <a class="gallery-link-image" href="${imageInfo.largeImageURL}"> 
-      <img
-      class="gallery-image"
-      src="${imageInfo.webformatURL}"
-      data-source="${imageInfo.largeImageURL}"
-      alt="${imageInfo.tags}"
-    /> </a>
-
-   <div class="image-info">
-      <p class="image-additional-info"><strong>Likes:</strong> ${imageInfo.likes}</p>
-      <p class="image-additional-info"><strong>Views:</strong> ${imageInfo.views}</p>
-      <p class="image-additional-info"><strong>Comments:</strong> ${imageInfo.comments}</p>
-      <p class="image-additional-info"><strong>Downloads:</strong> ${imageInfo.downloads}</p>
-    </div>
-   </li>`;
-};
+import { createGalleryCardTemplate } from './render-function';
+import { fetchPhotosByUserQuery } from './pixabay-api';
 
 const onSearchFormSubmit = event => {
   event.preventDefault();
@@ -51,16 +35,7 @@ const onSearchFormSubmit = event => {
     return;
   }
 
-  fetch(
-    `https://pixabay.com/api/?key=48347976-46935637adedce2affc2ad0dc&q=${searchFormValue}&image_type=photo&orientation=horizontal$safesearch=true`
-  )
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-
-      return response.json();
-    })
+  fetchPhotosByUserQuery(searchFormValue)
     .then(data => {
       if (data.total === 0) {
         iziToast.error({
@@ -80,11 +55,12 @@ const onSearchFormSubmit = event => {
       galleryList.innerHTML = galleryTemplate;
 
       hideLoader();
-      searchFormEl.addEventListener('submit', onSearchFormSubmit);
 
       new SimpleLightbox('.gallery a', {
         captionDelay: 250,
       });
+      searchFormEl.addEventListener('submit', onSearchFormSubmit);
+      showLoader();
     })
     .catch(err => {
       console.error(err);
