@@ -18,6 +18,7 @@ const galleryList = document.querySelector('.js-gallery');
 import { createGalleryCardTemplate } from './js/render-function';
 import { fetchPhotosByUserQuery } from './js/pixabay-api';
 
+let lightbox;
 const onSearchFormSubmit = event => {
   event.preventDefault();
 
@@ -56,11 +57,15 @@ const onSearchFormSubmit = event => {
 
       hideLoader();
       searchFormEl.reset();
-      lightbox.refresh();
 
-      new SimpleLightbox('.gallery a', {
-        captionDelay: 250,
-      });
+      if (lightbox) {
+        lightbox.refresh();
+      } else {
+        lightbox = new SimpleLightbox('.gallery a', {
+          captionsData: 'alt',
+          captionDelay: 250,
+        });
+      }
       searchFormEl.addEventListener('submit', onSearchFormSubmit);
       showLoader();
     })
