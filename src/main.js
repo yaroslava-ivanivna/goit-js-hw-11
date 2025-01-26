@@ -34,7 +34,7 @@ const onSearchFormSubmit = event => {
         'Sorry, there are no images matching your search query. Please try again!',
       position: 'topRight',
     });
-    searchFormEl.removeEventListener('submit', onSearchFormSubmit);
+
     return;
   }
 
@@ -69,13 +69,10 @@ const onSearchFormSubmit = event => {
           captionDelay: 250,
         });
       }
-      searchFormEl.addEventListener('submit', onSearchFormSubmit);
-      showLoader();
     })
     .catch(err => {
       hideLoader();
       console.error(err);
-      searchFormEl.addEventListener('submit', onSearchFormSubmit);
     });
 };
 
