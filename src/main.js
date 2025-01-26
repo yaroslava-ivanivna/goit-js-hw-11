@@ -25,7 +25,9 @@ const onSearchFormSubmit = event => {
   showLoader();
 
   const searchFormValue = event.currentTarget.elements.search.value.trim();
+
   if (searchFormValue === '') {
+    hideLoader();
     iziToast.error({
       title: 'Error',
       message:
@@ -39,23 +41,24 @@ const onSearchFormSubmit = event => {
   fetchPhotosByUserQuery(searchFormValue)
     .then(data => {
       if (data.total === 0) {
+        hideLoader();
         iziToast.error({
           title: 'Error',
           message:
             'Sorry, there are no images matching your search query. Please try again!',
           position: 'topRight',
         });
+
         galleryList.innerHTML = '';
         searchFormEl.reset();
         return;
       }
+      hideLoader();
       const galleryTemplate = data.hits
         .map(el => createGalleryCardTemplate(el))
         .join('');
 
       galleryList.innerHTML = galleryTemplate;
-
-      hideLoader();
       searchFormEl.reset();
 
       if (lightbox) {
@@ -70,8 +73,8 @@ const onSearchFormSubmit = event => {
       showLoader();
     })
     .catch(err => {
-      console.error(err);
       hideLoader();
+      console.error(err);
       searchFormEl.addEventListener('submit', onSearchFormSubmit);
     });
 };
